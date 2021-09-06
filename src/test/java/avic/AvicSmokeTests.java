@@ -62,15 +62,15 @@ public class AvicSmokeTests {
     }
 
     @Test(priority = 3)
-    public void checkThatCatalogueIsWorking (){
+    public void checkThatCatalogueIsWorking() {
 
         Actions action = new Actions(driver);
         driver.manage()
                 .timeouts()
                 .implicitlyWait(30, TimeUnit.SECONDS);
-        WebElement webElement = driver.findElement(By.xpath("//a[@href='https://avic.ua/ua/noutbuki-i-aksessuaryi']//span[@class='sidebar-item-title']"));
+        WebElement webElement = driver.findElement(By.xpath("//a[@href='https://avic.ua/noutbuki-i-aksessuaryi']//span[@class='sidebar-item-title']"));
         action.moveToElement(webElement).pause(500)
-                .moveToElement(driver.findElement(By.xpath("//ul[@class='sidebar-list']//a[@href='https://avic.ua/ua/noutbuki']"))).pause(500)
+                .moveToElement(driver.findElement(By.xpath("//ul[@class='sidebar-list']//a[@href='https://avic.ua/noutbuki']"))).pause(500)
                 .moveToElement(driver.findElement(By.xpath("//ul[@class='sidebar-list']//a[@href='/noutbuki/proizvoditel--lenovo']"))).pause(500)
                 .click().build().perform();
         assertTrue(driver.getCurrentUrl().contains("proizvoditel--lenovo"));
@@ -78,13 +78,13 @@ public class AvicSmokeTests {
 
 
     @Test(priority = 4)
-    public void checkIfSearchResultByFilterContainsSearchWord(){
+    public void checkIfSearchResultByFilterContainsSearchWord() {
         Actions action = new Actions(driver);
 
         driver.manage()
                 .timeouts()
                 .implicitlyWait(30, TimeUnit.SECONDS);
-        WebElement webElement = driver.findElement(By.xpath("//a[@href='https://avic.ua/ua/girobordyi-i-giroskuteryi']//span[@class='sidebar-item-title']"));
+        WebElement webElement = driver.findElement(By.xpath("//a[@href='https://avic.ua/girobordyi-i-giroskuteryi']//span[@class='sidebar-item-title']"));
 
         action.moveToElement(webElement).pause(500)
                 .moveToElement(driver.findElement(By.xpath("//ul[@class='sidebar-list']//a[contains(text(), 'самокат')]"))).pause(500)
@@ -95,25 +95,41 @@ public class AvicSmokeTests {
 
         List<WebElement> elements = driver.findElements(By.xpath("//div[@class='prod-cart__descr']"));
 
-        for (WebElement element: elements) {
+        for (WebElement element : elements) {
             assertTrue(element.getText().contains("Mi"));
         }
 
     }
 
     @Test(priority = 5)
-    public void test(){
-        driver.findElement(By.xpath("//a[@href='https://avic.ua/ua/apple-store']//span[@class='sidebar-item-title']")).click();
-        driver.findElement(By.xpath("//div[@class='brand-box__info']//a[@href='https://avic.ua/ua/iphone']")).click();
+    public void test() {
+        driver.findElement(By.xpath("//a[@href='https://avic.ua/apple-store']//span[@class='sidebar-item-title']")).click();
+        driver.findElement(By.xpath("//div[@class='brand-box__info']//a[@href='https://avic.ua/iphone']")).click();
+        driver.findElement(By.xpath("//label[@for='fltr-1']")).click();
+        driver.findElement(By.xpath("//label[@for='fltr-seriya-iphone-11']")).click();
+        driver.manage()
+                .timeouts()
+                .implicitlyWait(30, TimeUnit.SECONDS);
 
 
-        //WebElement el = driver.findElementBy....
-        //
-        //
-        //
-        //while(el.isDisplayed())
-        //
-        //   el.click();
+        WebElement el = driver.findElement(By.xpath("//a[@class='btn-see-more js_show_more']"));
+
+       try{
+           while (el.isDisplayed()) {
+               el.click();
+           }
+       }catch (Exception e) {
+           el.clear();
+       }
+
+
+        List<WebElement> resList = driver.findElements(By.xpath("//div[@class='prod-cart height']"));
+
+//        for(WebElement element : resList){
+//            assertTrue(element.getText().contains("iPhone 11"));
+//        }
+
+        assertEquals(resList.size(), 12);
     }
 
     @AfterMethod
