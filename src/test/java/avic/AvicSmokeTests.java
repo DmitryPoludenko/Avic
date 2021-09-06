@@ -102,34 +102,18 @@ public class AvicSmokeTests {
     }
 
     @Test(priority = 5)
-    public void test() {
-        driver.findElement(By.xpath("//a[@href='https://avic.ua/apple-store']//span[@class='sidebar-item-title']")).click();
-        driver.findElement(By.xpath("//div[@class='brand-box__info']//a[@href='https://avic.ua/iphone']")).click();
+    public void checkCorrectlyWorkingFilter() {
+
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+        driver.findElement(By.xpath("//a[@href='https://avic.ua/ua/apple-store']//span[@class='sidebar-item-title']")).click();
+        driver.findElement(By.xpath("//div[@class='brand-box__info']//a[@href='https://avic.ua/ua/iphone']")).click();
+
         driver.findElement(By.xpath("//label[@for='fltr-1']")).click();
+        assertTrue(driver.getCurrentUrl().contains("available--on"));
+
         driver.findElement(By.xpath("//label[@for='fltr-seriya-iphone-11']")).click();
-        driver.manage()
-                .timeouts()
-                .implicitlyWait(30, TimeUnit.SECONDS);
-
-
-        WebElement el = driver.findElement(By.xpath("//a[@class='btn-see-more js_show_more']"));
-
-       try{
-           while (el.isDisplayed()) {
-               el.click();
-           }
-       }catch (Exception e) {
-           el.clear();
-       }
-
-
-        List<WebElement> resList = driver.findElements(By.xpath("//div[@class='prod-cart height']"));
-
-//        for(WebElement element : resList){
-//            assertTrue(element.getText().contains("iPhone 11"));
-//        }
-
-        assertEquals(resList.size(), 12);
+        assertTrue(driver.getCurrentUrl().contains("available--on_seriya--iphone-11"));
     }
 
     @AfterMethod
