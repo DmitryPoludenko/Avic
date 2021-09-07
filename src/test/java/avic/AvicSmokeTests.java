@@ -106,8 +106,8 @@ public class AvicSmokeTests {
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        driver.findElement(By.xpath("//a[@href='https://avic.ua/ua/apple-store']//span[@class='sidebar-item-title']")).click();
-        driver.findElement(By.xpath("//div[@class='brand-box__info']//a[@href='https://avic.ua/ua/iphone']")).click();
+        driver.findElement(By.xpath("//a[@href='https://avic.ua/apple-store']//span[@class='sidebar-item-title']")).click();
+        driver.findElement(By.xpath("//div[@class='brand-box__info']//a[@href='https://avic.ua/iphone']")).click();
 
         driver.findElement(By.xpath("//label[@for='fltr-1']")).click();
         assertTrue(driver.getCurrentUrl().contains("available--on"));
